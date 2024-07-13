@@ -5,7 +5,7 @@ import { IoMdSend } from "react-icons/io";
 import React, {useEffect, useState} from 'react'
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup, signOut} from 'firebase/auth'
 import {app} from './firebase'
-import {addDoc, collection, getFirestore, orderBy, onSnapshot, serverTimestamp} from 'firebase/firestore'
+import {addDoc, collection, getFirestore, onSnapshot} from 'firebase/firestore'
 
 const auth = getAuth(app);
 
@@ -17,8 +17,8 @@ const loginHandle = ()=>{
 function App() {
 
   const [user, setUser] = useState(false)
-  const [messages,setMessages]=useState([]); messages.sort((a, b)=> a.time - b.time)
- 
+  const [messages,setMessages]=useState([]); 
+  messages.sort((a, b) => a.time - b.time)
 
   useEffect(()=>{
 onAuthStateChanged(auth,(userData)=>{
@@ -74,7 +74,7 @@ const handleSubmit= async(e)=>{
       text:inputVal.username,
       uid:user.uid,
       uri:user.photoURL,
-      time:Date.now()
+      time: Date.now()
     })
   }
   catch(error){
@@ -103,7 +103,7 @@ console.log(user)
       <div className='chat-box'>
       {
         messages?.map((val)=>(
-          val.uid != "QaodAbzvLzepWcHV8cYjTgV87Bo1"? <div className='chat-text-box-admin'><span className='text-wrap'>{val.text}</span></div> : <div className='chat-text-box-user'><span className='text-wrap'>{val.text}</span></div>
+          val.uid == user.uid ? <div className='chat-text-box-admin'><span className='text-wrap'>{val.text}</span></div> : <div className='chat-text-box-user'><span className='text-wrap'>{val.text}</span></div>
         ))
       }
 

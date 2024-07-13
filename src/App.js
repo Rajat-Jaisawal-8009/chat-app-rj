@@ -17,7 +17,7 @@ const loginHandle = ()=>{
 function App() {
 
   const [user, setUser] = useState(false)
-  const [messages,setMessages]=useState([])
+  const [messages,setMessages]=useState([]); messages.sort((a, b)=> a.time - b.time)
  
 
   useEffect(()=>{
@@ -74,7 +74,7 @@ const handleSubmit= async(e)=>{
       text:inputVal.username,
       uid:user.uid,
       uri:user.photoURL,
-      createdAt:serverTimestamp(),
+      time:Date.now()
     })
   }
   catch(error){
